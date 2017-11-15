@@ -1,3 +1,5 @@
+import boto3
+
 sns = boto3.client('sns', region_name='eu-west-1')
 sns_app_platform_arn = ''
 
