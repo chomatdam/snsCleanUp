@@ -1,6 +1,6 @@
 import boto3
 
-client = boto3.client('sns')
+client = boto3.client('sns', region_name='eu-west-1')
 
 
 def is_disabled(endpoint_arn):
@@ -19,6 +19,7 @@ def clean_up_subscription(subscription_arn, endpoint_arn):
 
 
 def list_subscriptions_per_topic(topic_arn):
+    #we don't handle the last call assuming that will come only 100 more requests
     subscriptions_deleted = 0
     result = client.list_subscriptions_by_topic(TopicArn=topic_arn)
     next_token = result['NextToken']
