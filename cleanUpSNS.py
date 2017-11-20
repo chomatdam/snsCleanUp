@@ -4,11 +4,15 @@ client = boto3.client('sns', region_name='eu-west-1')
 
 
 def is_disabled(endpoint_arn):
-    attributes = client.get_endpoint_attributes(EndpointArn=endpoint_arn)
-    enabled = attributes['Attributes']['Enabled']
-    if enabled == 'false':
-        print(', '.join(attributes))
-    return enabled == 'false'
+    try:
+        attributes = client.get_endpoint_attributes(EndpointArn=endpoint_arn)
+        enabled = attributes['Attributes']['Enabled']
+        if enabled == 'false':
+            print(', '.join(attributes))
+        return enabled == 'false'
+    except:
+        print('ERROR retrieving information for endpoint %s. Skipping endpoint.' % endpoint_arn)
+        return False
 
 
 def clean_up_subscription(subscription_arn, endpoint_arn):
