@@ -16,10 +16,17 @@ def is_disabled(endpoint_arn):
 
 
 def clean_up_subscription(subscription_arn, endpoint_arn):
-    print(subscription_arn)
-    print(client.unsubscribe(SubscriptionArn=subscription_arn))
-    print(endpoint_arn)
-    print(client.delete_endpoint(EndpointArn=endpoint_arn))
+    try:
+        unsubscribe = client.unsubscribe(SubscriptionArn=subscription_arn)
+        print(unsubscribe)
+    except:
+        print('ERROR unsubscribing %s' % subscription_arn)
+        return
+    try:
+        endpoint = client.delete_endpoint(EndpointArn=endpoint_arn)
+        print(endpoint)
+    except:
+        print('ERROR deleting endpoint %s' % endpoint_arn)
 
 
 def list_subscriptions_per_topic(topic_arn):
