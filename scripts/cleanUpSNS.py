@@ -1,4 +1,5 @@
 import boto3
+import os
 
 client = boto3.client('sns', region_name='eu-west-1')
 
@@ -54,4 +55,6 @@ def list_subscriptions_per_topic(topic_arn):
 
 
 if __name__ == '__main__':
-    list_subscriptions_per_topic('MY-ARN')
+    arn = os.environ['ARN']
+    print('Current ARN: ' + arn)
+    list_subscriptions_per_topic(arn)
